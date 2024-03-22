@@ -5,7 +5,7 @@ from entities.player import Player
 
 class Level:
     def __init__(self):
-        # get the display surface
+        # get the display surface 
         self.display_surface = pygame.display.get_surface()
     
 
