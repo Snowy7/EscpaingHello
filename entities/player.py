@@ -4,7 +4,7 @@ from settings import *
 class Player(pygame.sprite.Sprite):
     def __init__ (self, pos, groups, obstacle_sprites, interactable_sprites):
         super().__init__(groups)
-        self.image = pygame.image.load('./assets/images/npc_mage.png').convert_alpha()
+        self.image = pygame.image.load('./assets/images/hero_basic.png').convert_alpha()
         self.image = pygame.transform.scale(self.image, (TILESIZE, TILESIZE))
         self.rect = self.image.get_rect(topleft = pos)
         self.hitbox = self.rect
@@ -17,7 +17,8 @@ class Player(pygame.sprite.Sprite):
         
         self.lastInteracted = None
         self.didPressE = False
-        self._layer = 10
+        self.lookDir = 0
+        self.order = 10
 
     def input(self):
         keys = pygame.key.get_pressed()
@@ -46,6 +47,13 @@ class Player(pygame.sprite.Sprite):
         self.collision('vertical')
         self.rect.center = self.hitbox.center
         
+        # inverse image if moving left
+        if self.direction.x < 0 and self.lookDir == 0:
+            self.image = pygame.transform.flip(self.image, True, False)
+            self.lookDir = 1
+        elif self.direction.x > 0 and self.lookDir == 1:                
+                self.image = pygame.transform.flip(self.image, True, False)
+                self.lookDir = 0
         self.Interact()
 
     def collision(self, direction):
@@ -69,7 +77,7 @@ class Player(pygame.sprite.Sprite):
         isInteracting = False
         targetSprite = None
         for sprite in self.interactable_sprites:
-            if sprite.hitbox.colliderect(self.hitbox):
+            if sprite.hitbox.colliderect(self.hitbox) and sprite.canInteract:
                 isInteracting = True
                 targetSprite = sprite
                 break

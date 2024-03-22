@@ -1,6 +1,6 @@
 import pygame
 from settings import *
-from entities.tiles import Ground, Wall, TestInteractable
+from entities.tiles import Ground, Wall, TestInteractable, Chest, GoldenChest
 from entities.player import Player
 
 class Level:
@@ -23,15 +23,20 @@ class Level:
             for col_index, col in enumerate(row):
                 x = col_index * TILESIZE
                 y = row_index * TILESIZE
-                #Ground((x, y), [self.background_sprites])
                 
                 Ground((x, y), [self.visible_sprites, self.background_sprites])
+
                 if col == 'w':
                     Wall((x, y), [self.visible_sprites, self.obstacle_sprites])
                 if col == 'p':
                     self.player = Player((x, y), [self.visible_sprites], self.obstacle_sprites, self.interactable_sprites)
-                if col == "ti":
+                if col == "t":
                     TestInteractable((x, y), [self.visible_sprites, self.interactable_sprites])
+                if col == "c":
+                    Chest((x, y), [self.visible_sprites, self.interactable_sprites])
+                if col == "g":
+                    GoldenChest((x, y), [self.visible_sprites, self.interactable_sprites])
+                    
 
     def run(self):
         # update and draw game
@@ -57,9 +62,15 @@ class YSortCameraGroup(pygame.sprite.Group):
         self.offset.x = player.rect.centerx - self.half_with
         self.offset.y = player.rect.centery - self.half_height
         
-
+        sprites_to_draw = []
 
         #for sprite in self.sprites():
         for sprite in sorted(self.sprites(), key = lambda sprite: sprite.rect.centery):
             offset_post = sprite.rect.topleft - self.offset
+            sprites_to_draw.append((sprite, offset_post))
+            
+        # sort by the order
+        sprites_to_draw.sort(key = lambda sprite: sprite[0].order)
+        
+        for sprite, offset_post in sprites_to_draw:
             self.display_surface.blit(sprite.image, offset_post)
