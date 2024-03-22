@@ -27,7 +27,7 @@ class Game:
             self.screen.fill('#1c1117')
             self.level.run()
             pygame.display.update()
-            self.clock.tick(FPS)
+            self.clock.tick(FPS) 
 
 if __name__ == '__main__':
     game = Game()
