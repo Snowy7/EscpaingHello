@@ -54,7 +54,42 @@ class Wall():
         ]
         center = Tile("./assets/images/wall_center.png", pos, groups)
         top = Tile("./assets/images/Wall_top_center.png", (pos[0], pos[1] - TILESIZE), [groups[0]])
-        stain = Tile(stain_images[pygame.time.get_ticks() % len(stain_images)], (pos[0], pos[1] + TILESIZE), [groups[0]])
+       # stain = Tile(stain_images[pygame.time.get_ticks() % len(stain_images)], (pos[0], pos[1] + TILESIZE), [groups[0]])
+
+class LeftWall():
+    # a wall has three parts: start middle end
+    def __init__(self, pos, groups):
+        # draw three parts of the wall
+        center = Tile("./assets/images/Wall_outer_w2.png", pos, groups)
+
+class RightWall():
+    # a wall has three parts: start middle end
+    def __init__(self, pos, groups):
+        # draw three parts of the wall
+        center = Tile("./assets/images/Wall_outer_e2.png", pos, groups)
+
+class BottomLeft():
+    def __init__(self, pos, groups):
+        # draw three parts of the wall
+        center = Tile("./assets/images/Wall_outer_sw.png", pos, groups)
+
+class BottomRight():
+    def __init__(self, pos, groups):
+        # draw three parts of the wall
+        center = Tile("./assets/images/Wall_outer_se.png", pos, groups)
+
+class TopLeft():
+    def __init__(self, pos, groups):
+        # draw three parts of the wall
+        center = Tile("./assets/images/Wall_outer_w2.png", pos, groups)
+        top = Tile("./assets/images/Wall_outer_nw.png", (pos[0], pos[1] - TILESIZE), [groups[0]])
+
+class TopRight():
+    def __init__(self, pos, groups):
+        # draw three parts of the wall
+        center = Tile("./assets/images/Wall_outer_e2.png", pos, groups)
+        top = Tile("./assets/images/Wall_outer_ne.png", (pos[0], pos[1] - TILESIZE), [groups[0]])
+    
 
 class TestInteractable(Interactable):
     def __init__(self, pos, groups):
@@ -82,4 +117,5 @@ class Chest(BaseChest):
 class GoldenChest(BaseChest):
     def __init__(self, pos, groups):
         super().__init__(pos, groups, "./assets/images/chest_golden_closed.png", "./assets/images/chest_golden_open_full.png")
+
         

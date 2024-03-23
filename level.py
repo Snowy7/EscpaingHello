@@ -1,6 +1,6 @@
 import pygame
 from settings import *
-from entities.tiles import Ground, Wall, TestInteractable, Chest, GoldenChest
+from entities.tiles import Ground, Wall, TestInteractable, Chest, GoldenChest, LeftWall,BottomLeft,TopLeft,BottomRight,TopRight,RightWall
 from entities.player import Player
 
 class Level:
@@ -24,10 +24,30 @@ class Level:
                 x = col_index * TILESIZE
                 y = row_index * TILESIZE
                 
-                Ground((x, y), [self.visible_sprites, self.background_sprites])
+                #Ground((x, y), [self.visible_sprites, self.background_sprites])
 
                 if col == 'w':
                     Wall((x, y), [self.visible_sprites, self.obstacle_sprites])
+                    continue
+                if col == "LW":
+                    LeftWall((x,y),[self.visible_sprites, self.obstacle_sprites])
+                    continue
+                if col == "rw":
+                    RightWall((x,y),[self.visible_sprites, self.obstacle_sprites])
+                    continue
+                if col == "bl":
+                    BottomLeft((x,y),[self.visible_sprites, self.obstacle_sprites])
+                    continue 
+                if col == "br":
+                    BottomRight((x,y),[self.visible_sprites, self.obstacle_sprites])
+                    continue 
+                if col == "tl":
+                    TopLeft((x,y),[self.visible_sprites, self.obstacle_sprites])
+                    continue 
+                if col == "tr":
+                    TopRight((x,y),[self.visible_sprites, self.obstacle_sprites])
+                    continue 
+                Ground((x, y), [self.visible_sprites, self.background_sprites])
                 if col == 'p':
                     self.player = Player((x, y), [self.visible_sprites], self.obstacle_sprites, self.interactable_sprites)
                 if col == "t":
@@ -36,7 +56,7 @@ class Level:
                     Chest((x, y), [self.visible_sprites, self.interactable_sprites])
                 if col == "g":
                     GoldenChest((x, y), [self.visible_sprites, self.interactable_sprites])
-                    
+                
 
     def run(self):
         # update and draw game
