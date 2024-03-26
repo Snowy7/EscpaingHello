@@ -62,9 +62,11 @@ class LeftWall():
     # a wall has three parts: start middle end
     def __init__(self, pos, groups):
         # draw three parts of the wall
-        
         center = Tile("./assets/images/Wall_outer_w2.png", pos, groups)
-        center.hitbox.inflate(200, 0)
+        # make it so it is 10px on width
+        center.hitbox = center.rect.inflate(-TILESIZE + 10, 0)
+        # move the hitbox to the right
+        center.hitbox.move_ip(10, 0)
     
 class RightWall():
     # a wall has three parts: start middle end
