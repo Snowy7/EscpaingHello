@@ -15,6 +15,7 @@ class Tile(pygame.sprite.Sprite):
         self.hitbox = self.rect.inflate(0, -10)
         
         self.order = layer
+      
 
 class Interactable(Tile):
     def __init__(self, image_path, pos, groups):
@@ -55,13 +56,16 @@ class Wall():
         center = Tile("./assets/images/wall_center.png", pos, groups)
         top = Tile("./assets/images/Wall_top_center.png", (pos[0], pos[1] - TILESIZE), [groups[0]])
        # stain = Tile(stain_images[pygame.time.get_ticks() % len(stain_images)], (pos[0], pos[1] + TILESIZE), [groups[0]])
+    
 
 class LeftWall():
     # a wall has three parts: start middle end
     def __init__(self, pos, groups):
         # draw three parts of the wall
+        
         center = Tile("./assets/images/Wall_outer_w2.png", pos, groups)
-
+        center.hitbox.inflate(200, 0)
+    
 class RightWall():
     # a wall has three parts: start middle end
     def __init__(self, pos, groups):

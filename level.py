@@ -26,10 +26,10 @@ class Level:
                 
                 #Ground((x, y), [self.visible_sprites, self.background_sprites])
 
-                if col == 'w':
+                if col == 'wa':
                     Wall((x, y), [self.visible_sprites, self.obstacle_sprites])
                     continue
-                if col == "LW":
+                if col == "lw":
                     LeftWall((x,y),[self.visible_sprites, self.obstacle_sprites])
                     continue
                 if col == "rw":
@@ -48,7 +48,16 @@ class Level:
                     TopRight((x,y),[self.visible_sprites, self.obstacle_sprites])
                     continue 
                 Ground((x, y), [self.visible_sprites, self.background_sprites])
-                if col == 'p':
+
+                if col == "LW":
+                    LeftWall((x,y),[self.visible_sprites, self.obstacle_sprites])
+                if col == "RW":
+                    RightWall((x,y),[self.visible_sprites, self.obstacle_sprites])
+                if col == "TL":
+                    TopLeft((x,y),[self.visible_sprites, self.obstacle_sprites])    
+                if col == "TR":
+                    TopRight((x,y),[self.visible_sprites, self.obstacle_sprites])    
+                if col == 'pl':
                     self.player = Player((x, y), [self.visible_sprites], self.obstacle_sprites, self.interactable_sprites)
                 if col == "t":
                     TestInteractable((x, y), [self.visible_sprites, self.interactable_sprites])
