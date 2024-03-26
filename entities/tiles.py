@@ -57,6 +57,14 @@ class Wall():
         top = Tile("./assets/images/Wall_top_center.png", (pos[0], pos[1] - TILESIZE), [groups[0]])
        # stain = Tile(stain_images[pygame.time.get_ticks() % len(stain_images)], (pos[0], pos[1] + TILESIZE), [groups[0]])
     
+class BottomWall():
+    def __init__(self,pos,groups):
+        top = Tile("./assets/images/Wall_top_center.png", (pos[0], pos[1] - TILESIZE), groups)
+
+class TopWall():
+    def __init__(self,pos,groups):
+        top = Tile("./assets/images/Wall_top_center.png", (pos[0], pos[1]), groups)        
+        
 
 class LeftWall():
     # a wall has three parts: start middle end
@@ -73,27 +81,51 @@ class RightWall():
     def __init__(self, pos, groups):
         # draw three parts of the wall
         center = Tile("./assets/images/Wall_outer_e2.png", pos, groups)
+        # make it so it is 10px on width
+        center.hitbox = center.rect.inflate(-TILESIZE + 10, 0)
+        # move the hitbox to the left
+        center.hitbox.move_ip(-10, 0)
 
 class BottomLeft():
     def __init__(self, pos, groups):
         # draw three parts of the wall
         center = Tile("./assets/images/Wall_outer_sw.png", pos, groups)
+        center.hitbox = center.rect.inflate(-TILESIZE + 10, 0)
+        # move the hitbox to the left
+        center.hitbox.move_ip(10, 0)
+
+class BotRightCorner():
+    def __init__(self, pos, groups):
+        # draw three parts of the wall
+        center = Tile("./assets/images/Wall_inner_se.png", pos, groups)
+        center.hitbox = center.rect.inflate(-TILESIZE + 10, 0)
+        # move the hitbox to the left
+        center.hitbox.move_ip(10, 0)
 
 class BottomRight():
     def __init__(self, pos, groups):
         # draw three parts of the wall
         center = Tile("./assets/images/Wall_outer_se.png", pos, groups)
+        center.hitbox = center.rect.inflate(-TILESIZE + 10, 0)
+        # move the hitbox to the left
+        center.hitbox.move_ip(-10, 0)
 
 class TopLeft():
     def __init__(self, pos, groups):
         # draw three parts of the wall
         center = Tile("./assets/images/Wall_outer_w2.png", pos, groups)
+        center.hitbox = center.rect.inflate(-TILESIZE + 10, 0)
+        # move the hitbox to the left
+        center.hitbox.move_ip(10, 0)
         top = Tile("./assets/images/Wall_outer_nw.png", (pos[0], pos[1] - TILESIZE), [groups[0]])
 
 class TopRight():
     def __init__(self, pos, groups):
         # draw three parts of the wall
         center = Tile("./assets/images/Wall_outer_e2.png", pos, groups)
+        center.hitbox = center.rect.inflate(-TILESIZE + 10, 0)
+        # move the hitbox to the left
+        center.hitbox.move_ip(-10, 0)
         top = Tile("./assets/images/Wall_outer_ne.png", (pos[0], pos[1] - TILESIZE), [groups[0]])
     
 

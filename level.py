@@ -1,6 +1,6 @@
 import pygame
 from settings import *
-from entities.tiles import Ground, Wall, TestInteractable, Chest, GoldenChest, LeftWall,BottomLeft,TopLeft,BottomRight,TopRight,RightWall
+from entities.tiles import Ground, Wall, TestInteractable, Chest, GoldenChest, LeftWall,BottomLeft,TopLeft,BottomRight,TopRight,RightWall,BottomWall,TopWall,BotRightCorner
 from entities.player import Player
 
 class Level:
@@ -25,7 +25,8 @@ class Level:
                 y = row_index * TILESIZE
                 
                 #Ground((x, y), [self.visible_sprites, self.background_sprites])
-
+                if col == "ar":
+                    continue 
                 if col == 'wa':
                     Wall((x, y), [self.visible_sprites, self.obstacle_sprites])
                     continue
@@ -38,6 +39,7 @@ class Level:
                 if col == "bl":
                     BottomLeft((x,y),[self.visible_sprites, self.obstacle_sprites])
                     continue 
+                         
                 if col == "br":
                     BottomRight((x,y),[self.visible_sprites, self.obstacle_sprites])
                     continue 
@@ -47,8 +49,18 @@ class Level:
                 if col == "tr":
                     TopRight((x,y),[self.visible_sprites, self.obstacle_sprites])
                     continue 
+                if col == "tw":
+                    TopWall((x,y),[self.visible_sprites, self.obstacle_sprites])  
+                    continue 
+                if col == "bw":
+                    BottomWall((x,y),[self.visible_sprites, self.obstacle_sprites])
+                    continue 
                 Ground((x, y), [self.visible_sprites, self.background_sprites])
-
+                
+                if col ==  "BRC":
+                    BotRightCorner((x,y),[self.visible_sprites, self.obstacle_sprites])
+                if col == "bw":
+                    BottomWall((x,y),[self.visible_sprites, self.obstacle_sprites])
                 if col == "LW":
                     LeftWall((x,y),[self.visible_sprites, self.obstacle_sprites])
                 if col == "RW":
