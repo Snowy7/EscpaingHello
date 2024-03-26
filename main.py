@@ -5,7 +5,7 @@ from level import Level # Level is the main class that will be running the game
 # NO NEED TO EDIT
 # BE SAFE PLEASE
 
-class Game:  
+class Game:
     def __init__(self):
         pygame.init()
         self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
