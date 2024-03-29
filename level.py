@@ -1,6 +1,6 @@
 import pygame
 from settings import *
-from entities.tiles import Ground, TopLeftCorner, TopRightCorner, Wall, TestInteractable, Chest, GoldenChest, LeftWall,BottomLeft,TopLeft,BottomRight,TopRight,RightWall,BottomWall,TopWall,BottomRightCorner,BottomLeftCorner
+from entities.tiles import Ground, TopLeftCorner, TopRightCorner, Wall, TestInteractable, Chest, GoldenChest, LeftWall,BottomLeft,TopLeft,BottomRight,TopRight,RightWall,BottomWall,TopWall,BottomRightCorner,BottomLeftCorner,Box,Door
 from entities.player import Player
 
 class Level:
@@ -71,7 +71,9 @@ class Level:
                 Ground((x, y), [self.visible_sprites, self.background_sprites])
 
                 if col == "BL":
-                    BottomLeft((x,y),[self.visible_sprites, self.obstacle_sprites])          
+                    BottomLeft((x,y),[self.visible_sprites, self.obstacle_sprites])
+                if col == "bx":
+                    Box((x,y),[self.visible_sprites, self.obstacle_sprites])               
                 if col == "BR":
                     BottomRight((x,y),[self.visible_sprites, self.obstacle_sprites]) 
                 
@@ -91,8 +93,11 @@ class Level:
                     TestInteractable((x, y), [self.visible_sprites, self.interactable_sprites])
                 if col == "c":
                     Chest((x, y), [self.visible_sprites, self.interactable_sprites])
+                if col == "dr":
+                    Door((x, y), [self.visible_sprites, self.obstacle_sprites, self.interactable_sprites])    
                 if col == "g":
                     GoldenChest((x, y), [self.visible_sprites, self.interactable_sprites])
+                
                 
 
     def run(self):

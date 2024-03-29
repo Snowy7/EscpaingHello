@@ -2,25 +2,28 @@ import pygame
 from settings import *
 
 class Tile(pygame.sprite.Sprite):
-    def __init__(self, image_path, pos, groups, layer = 2):
+    def __init__(self, image_path, pos, groups, layer = 2, size = (TILESIZE, TILESIZE)):
         super().__init__(groups)
         
         # load the image, convert to alpha
         self.image = pygame.image.load(image_path).convert_alpha()
         # scale the image to the tilesize defined in settings
-        self.image = pygame.transform.scale(self.image, (TILESIZE, TILESIZE))
+        self.image = pygame.transform.scale(self.image, size)
         # get the rectangle of the image and set the topleft to the pos
         self.rect = self.image.get_rect(topleft = pos)
         
         self.hitbox = self.rect.inflate(0, -10)
         
         self.order = layer
-      
 
-class Interactable(Tile):
+        self.canCollide = True
+
+class TileInteractable(Tile):
     def __init__(self, image_path, pos, groups):
         super().__init__(image_path, pos, groups)
         self.canInteract = True
+
+        self.interactBox = self.hitbox.inflate(40, 40)
 
     def interact(self):
         print("Interacted")
@@ -28,6 +31,10 @@ class Interactable(Tile):
 class Ground(Tile):
     def __init__(self, pos, groups):
         super().__init__("./assets/images/floor_plain.png", pos, groups, layer = 1)
+
+class Box(Tile):
+    def __init__(self, pos, groups):
+        super().__init__("./assets/images/boxes_stacked.png", pos, groups, layer = 1)        
 
 class Wall2(Tile):
     def __init__(self, pos, groups):
@@ -152,11 +159,11 @@ class TopRight():
         top = Tile("./assets/images/Wall_outer_ne.png", (pos[0], pos[1] - TILESIZE), [groups[0]])
     
 
-class TestInteractable(Interactable):
+class TestInteractable(TileInteractable):
     def __init__(self, pos, groups):
         super().__init__("./assets/images/skull.png", pos, groups)
 
-class BaseChest(Interactable):
+class BaseChest(TileInteractable):
     def __init__(self, pos, groups, closed_img, opened_img):
         super().__init__(closed_img, pos, groups)
         self.opened_img = opened_img
@@ -170,6 +177,33 @@ class BaseChest(Interactable):
         
         self.canInteract = False
 
+class BaseDoor(TileInteractable):
+    def __init__(self, pos, groups, closed_img, opened_img):
+        super().__init__(closed_img, pos, groups)
+        self.opened_img = opened_img
+        self.closed_img = closed_img
+
+        self.image = pygame.transform.scale(self.image, size=(TILESIZE*2.5, TILESIZE*2))
+        self.rect.topleft = (pos[0] - TILESIZE/1.3, pos[1] - TILESIZE)
+        
+        self.pos = pos
+
+        self.order = 20
+        
+    def interact(self):
+        print("Gate Opened")
+        self.image = pygame.image.load(self.opened_img).convert_alpha()
+        self.image = pygame.transform.scale(self.image, (TILESIZE, TILESIZE))
+        self.image = pygame.transform.scale(self.image, size=(TILESIZE*2.5, TILESIZE*2))
+        self.rect = self.image.get_rect(topleft = (self.pos[0] - TILESIZE/1.3, self.pos[1] - TILESIZE))
+        
+        self.canInteract = False    
+        self.canCollide = False    
+
+
+class Door(BaseDoor):
+    def __init__(self, pos, groups):
+        super().__init__(pos, groups, "./assets/images/door_closed.png", "./assets/images/door_open.png")
 
 class Chest(BaseChest):
     def __init__(self, pos, groups):

@@ -59,7 +59,7 @@ class Player(pygame.sprite.Sprite):
     def collision(self, direction):
         if direction == 'horizontal':
             for sprite in self.obstacle_sprites:
-                if sprite.hitbox.colliderect(self.hitbox):
+                if sprite.canCollide and sprite.hitbox.colliderect(self.hitbox):
                     if self.direction.x > 0:  # moving right
                         self.hitbox.right = sprite.hitbox.left
                     if self.direction.x < 0:  # moving left
@@ -67,7 +67,7 @@ class Player(pygame.sprite.Sprite):
 
         if direction == 'vertical':
             for sprite in self.obstacle_sprites:
-                if sprite.hitbox.colliderect(self.hitbox):
+                if sprite.canCollide and sprite.hitbox.colliderect(self.hitbox):
                     if self.direction.y > 0:  # moving down
                         self.hitbox.bottom = sprite.hitbox.top
                     if self.direction.y < 0:  # moving up
@@ -77,7 +77,7 @@ class Player(pygame.sprite.Sprite):
         isInteracting = False
         targetSprite = None
         for sprite in self.interactable_sprites:
-            if sprite.hitbox.colliderect(self.hitbox) and sprite.canInteract:
+            if sprite.interactBox.colliderect(self.hitbox) and sprite.canInteract:
                 isInteracting = True
                 targetSprite = sprite
                 break
