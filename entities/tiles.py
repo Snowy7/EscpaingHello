@@ -59,7 +59,8 @@ class Wall():
     
 class BottomWall():
     def __init__(self,pos,groups):
-        top = Tile("./assets/images/Wall_top_center.png", (pos[0], pos[1] - TILESIZE), groups)
+        top = Tile("./assets/images/Wall_top_center.png", (pos[0], pos[1]), groups)
+        top.image = pygame.transform.rotate(top.image, 180)
 
 class TopWall():
     def __init__(self,pos,groups):
@@ -94,19 +95,35 @@ class BottomLeft():
         # move the hitbox to the left
         center.hitbox.move_ip(10, 0)
 
-class TopRightCorner():
+class BottomRightCorner():
     def __init__(self, pos, groups):
         # draw three parts of the wall
         center = Tile("./assets/images/Wall_inner_se.png", pos, groups)
         center.hitbox = center.rect.inflate(-TILESIZE + 10, 0)
         # move the hitbox to the left
         center.hitbox.move_ip(10, 0)
-
+        
+class TopRightCorner():
+    def __init__(self, pos, groups):
+        center = Tile("./assets/images/Wall_inner_sw.png", pos, groups)
+        center.image = pygame.transform.rotate(center.image, 180)
+        center.hitbox = center.rect.inflate(-TILESIZE + 10, 0)
+        center.hitbox.move_ip(10, 0)
+        
 class TopLeftCorner():
+    def __init__(self, pos, groups):
+        center = Tile("./assets/images/Wall_inner_se.png", pos, groups)
+        center.image = pygame.transform.rotate(center.image, 180)
+        center.hitbox = center.rect.inflate(-TILESIZE + 10, 0)
+        center.hitbox.move_ip(10, 0)
+
+class BottomLeftCorner():
     def __init__(self, pos, groups):
         center = Tile("./assets/images/Wall_inner_sw.png", pos, groups)
         center.hitbox = center.rect.inflate(-TILESIZE + 10, 0)
-        center.hitbox.move_ip(10, 0)        
+        center.hitbox.move_ip(10, 0)
+        
+
 
 class BottomRight():
     def __init__(self, pos, groups):
