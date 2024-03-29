@@ -1,6 +1,6 @@
 import pygame
 from settings import *
-from entities.tiles import Ground, Wall, TestInteractable, Chest, GoldenChest, LeftWall,BottomLeft,TopLeft,BottomRight,TopRight,RightWall,BottomWall,TopWall,BotRightCorner
+from entities.tiles import Ground, Wall, TestInteractable, Chest, GoldenChest, LeftWall,BottomLeft,TopLeft,BottomRight,TopRight,RightWall,BottomWall,TopWall,TopRightCorner,TopLeftCorner
 from entities.player import Player
 
 class Level:
@@ -55,10 +55,20 @@ class Level:
                 if col == "bw":
                     BottomWall((x,y),[self.visible_sprites, self.obstacle_sprites])
                     continue 
+                if col ==  "TRC":
+                    TopRightCorner((x,y),[self.visible_sprites, self.obstacle_sprites])
+                    continue
+                if col ==  "TLC":
+                    TopLeftCorner((x,y),[self.visible_sprites, self.obstacle_sprites])
+                    continue
+
                 Ground((x, y), [self.visible_sprites, self.background_sprites])
+
+                if col == "BL":
+                    BottomLeft((x,y),[self.visible_sprites, self.obstacle_sprites])          
+                if col == "BR":
+                    BottomRight((x,y),[self.visible_sprites, self.obstacle_sprites]) 
                 
-                if col ==  "BRC":
-                    BotRightCorner((x,y),[self.visible_sprites, self.obstacle_sprites])
                 if col == "bw":
                     BottomWall((x,y),[self.visible_sprites, self.obstacle_sprites])
                 if col == "LW":

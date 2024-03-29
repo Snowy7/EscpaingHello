@@ -94,13 +94,19 @@ class BottomLeft():
         # move the hitbox to the left
         center.hitbox.move_ip(10, 0)
 
-class BotRightCorner():
+class TopRightCorner():
     def __init__(self, pos, groups):
         # draw three parts of the wall
         center = Tile("./assets/images/Wall_inner_se.png", pos, groups)
         center.hitbox = center.rect.inflate(-TILESIZE + 10, 0)
         # move the hitbox to the left
         center.hitbox.move_ip(10, 0)
+
+class TopLeftCorner():
+    def __init__(self, pos, groups):
+        center = Tile("./assets/images/Wall_inner_sw.png", pos, groups)
+        center.hitbox = center.rect.inflate(-TILESIZE + 10, 0)
+        center.hitbox.move_ip(10, 0)        
 
 class BottomRight():
     def __init__(self, pos, groups):
