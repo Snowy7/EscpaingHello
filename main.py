@@ -18,20 +18,23 @@ class Game:
     def run(self):
         # while True: to keep it running until the user quits
         while True:
-            # hazard: this handles the game quit buttons (do not remove)
-            events = pygame.event.get()
-            for event in events:
-                if event.type == pygame.QUIT:
-                    pygame.quit()
-                    sys.exit()
-            
-            self.screen.fill('#1c1117') # rgb(28, 17, 23)
-            self.level.run(events)
-            pygame.display.update()
-            self.clock.tick(FPS) 
-            
-            if self.level.done:
-                break
+            try:
+                    # hazard: this handles the game quit buttons (do not remove)
+                events = pygame.event.get()
+                for event in events:
+                    if event.type == pygame.QUIT:
+                        pygame.quit()
+                        sys.exit()
+
+                self.screen.fill('#1c1117') # rgb(28, 17, 23)
+                self.level.run(events)
+                pygame.display.update()
+                self.clock.tick(FPS) 
+
+                if self.level.done:
+                    break
+            except:
+                print("Oh something wrong happend, but we continue...")
             
         self.Restart()
 
