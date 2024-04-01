@@ -1,73 +1,53 @@
 import random
-import pyttsx3
-import threading
+import pygame
+from settings import *
 
-
-ANNOYING_STATEMENTS = [
-    "You're not good at this game",
-    "You're not even trying",
-    "You're not even close",
-    "Are you even trying?",
-    "What are you even doing?",
-    "Can you play seriously for once?",
-    "My grandma plays better than you",
-    "Even my dog plays better than you",
-    "Even my cat plays better than you",
-    "Even my goldfish plays better than you"
-    "Even my racoon plays better than you",
+ghostSounds = [
+    "v1.mp3",
+    "v2.mp3",
+    "v3.mp3",
+    "v4.mp3",
+    "v5.mp3",
+    "v6.mp3",
+    "v7.mp3",
+    "v8.mp3",
+    "v9.mp3",
+    "v10.mp3",
 ]
 
-class AIVoice:
-    def __init__(self, index):
-        self.engine = pyttsx3.init(driverName='sapi5')
-        self.voices = self.engine.getProperty('voices')
-        if index < len(self.voices):
-            self.setVoice(index)
+class Ghost:
+    def __init__(self, audio_manager) -> None:
+        self.sounds = [pygame.mixer.Sound(f"./assets/audio/ghost/{sound}") for sound in ghostSounds]
+        self.currentSound = None
+        self.volume = 0.5
+        
+        self.delay = 15000
+        self.lastPlayed = -self.delay
+        
+        self.played_sounds = []
+        
+        self.audio_manager = audio_manager
+        self.hasNext = False
+        
+    def play(self):
+        if not self.hasNext:
+            if len(self.played_sounds) == len(self.sounds):
+                self.played_sounds = []
+
+            sounds = [sound for sound in self.sounds if sound not in self.played_sounds]            
+            self.currentSound = random.choice(sounds)
+            self.played_sounds.append(self.currentSound)
         else:
-            self.setVoice(0)
-                    
-    def say(self, text):
-        
-        # stop the current speech
-        self.engine.stop()
-        
-        self.engine.say(text)
-        self.engine.runAndWait()
-        
-    def setVoice(self, index):
-        if index < len(self.voices):
-            self.engine.setProperty('voice', self.voices[index].id)
+            self.currentSound = self.hasNext
+            self.hasNext = False
             
-class AnnoyingAI(AIVoice):
-    def __init__(self):
-        super().__init__(1)
-        self.saidText = []
+        self.lastPlayed = pygame.time.get_ticks()
+        self.audio_manager.queue(self.currentSound, False)
         
-        # Interval every 10 seconds
-        self.interval = 10000
-        self.last_run = 0
-        
-    def update(self, t):
-        if t - self.last_run >= self.interval:
-            self.last_run = t
-            self.sayAnnoying()
-        
-        
-        
-    def sayAnnoyingAsync(self):
-        text = ANNOYING_STATEMENTS[0]
-        while text in self.saidText:
-            text = ANNOYING_STATEMENTS[random.randint(0, len(ANNOYING_STATEMENTS) - 1)]
-        self.saidText.append(text)
-        if len(self.saidText) >= len(ANNOYING_STATEMENTS):
-            self.saidText = []
+    def PlayNext(self, sound):
+        self.hasNext = sound
+        self.play()
             
-        self.say(text)
-        
-        
-            
-    def sayAnnoying(self):
-        speaker = threading.Thread(target=self.sayAnnoyingAsync)
-        speaker.start()
-    
-        
+    def update(self, ticks):
+        if ticks - self.lastPlayed > self.delay:
+            self.play()
